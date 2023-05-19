@@ -4,7 +4,7 @@
 
 # Kelp integration with Tinybird Starter Kit
 
-Example application showcasing how Kelp can be used to build a real-time dashboard on top of Tinybird.
+Example application showcasing how Kelp can be used to build a real-time dashboard on top of Tinybird, for an eCommerce demo application. This app allows you to track the status of orders in real-time, from placement to shipping and delivery, ultimately leading to better order management and improved customer satisfaction.
 
 ## Setup
 
@@ -23,9 +23,9 @@ git clone https://github.com/tinybirdco/kelp-tinybird-demo.git
 cd kelp-tinybird-demo
 ```
 
-2. Create an Upstash or  Account
+2. Create an Upstash or Confluent Kafka Account
 
-Go to [console.upstash.com](https://console.upstash.com/login) and create an account. You'll need it for the next step.
+This demo uses [Upstash](https://upstash.com/) as a managed Kafka provider, but you can also use [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you use Confluent Cloud, you will need to update the `config.json` file with your credentials.
 
 3. Install dependencies
 
@@ -41,19 +41,14 @@ Go to [https://ui.tinybird.co/tokens](https://ui.tinybird.co/tokens) and copy th
 
 ⚠️Warning! The Admin token, the one you copied following this guide, is your admin token. Don't share it or publish it in your application. You can manage your tokens via API or using the Auth Tokens section in the UI. More detailed info at [Auth Tokens management](https://www.tinybird.co/docs/api-reference/token-api.html)
 
-Once you have successfully authenticated with Tinybird, you can run the following to upload the pipes to your Tinybird workspace.
+1. Start sending data to Kafka.
+2.
 
 ```bash
-tb push --no-check
+npm run start
 ```
 
-1. Start sending data to Tinybird with Mockingbird. Check the [Mockingbird CLI documentation](https://mockingbird.tinybird.co/docs) for other installation, options and troubleshooting. Note, that you will need to paste in your Tinybird token.
-
-```bash
-mockingbird-cli tinybird --datasource=transactions --token=[PASTE_YOUR_TOKEN_FROM_TINYBIRD] --endpoint=eu_gcp --schema='schema.json' --eps 100
-```
-
-6. Go to your [Tinybird workspace](https://ui.tinybird.co) and check the data is flowing.
+1. Go to your [Tinybird workspace](https://ui.tinybird.co) and check the data is flowing.
 
 ## Authors
 

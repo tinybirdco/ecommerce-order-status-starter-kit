@@ -12,6 +12,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@faker-js/faker": "^8.0.1",
         "kafkajs": "^2.2.4"
     }
 }

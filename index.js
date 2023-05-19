@@ -1,4 +1,5 @@
 const { Kafka, Partitioners, logLevel } = require('kafkajs')
+const { faker } = require('@faker-js/faker');
 const config = require('./config.json')
 
 const connectToKafka = async () => {
@@ -31,13 +32,52 @@ const sendMessage = async (producer) => {
     const payload = {
         topic: config.topic,
         messages: [{
-            value: JSON.stringify({ kind: 'CAT', name: 'BMO' })
+            value: JSON.stringify({
+                product_ID: "Item_" + faker.number.int({ min: 0, max: 100000 }),
+                orderID: faker.number.int({ min: 10000, max: 20000 }),
+                shippingLocation: faker.location.streetAddress({ useFullAddress: true }),
+                currentLocation: {
+                    latitude: faker.location.latitude(),
+                    longitude: faker.location.longitude()
+                },
+                orderDate: faker.date.recent({ days: 10 }),
+                fullName: faker.person.fullName(),
+                userEmail: faker.internet.email(),
+            })
         }],
     }
     const responses = await producer.send(payload)
 
     console.log('Published message', { responses })
     return responses
+}
+const sendMessageEverySecond = async (producer) => {
+    setInterval(async () => {
+
+        const message = {
+            product_ID: faker.number.int({ min: 0, max: 100000 }),
+            reigon: faker.number.int({ min: 1, max: 10 }),
+            orderID: faker.number.int({ min: 10000, max: 20000 }),
+            shippingLocation: faker.location.streetAddress({ useFullAddress: true }),
+            currentLocation: {
+                latitude: faker.location.latitude(),
+                longitude: faker.location.longitude()
+            },
+            orderDate: faker.date.recent({ days: 10 }),
+            fullName: faker.person.fullName(),
+            userEmail: faker.internet.email(),
+        }
+
+        const payload = {
+            topic: config.topic,
+            messages: [{
+                value: JSON.stringify(message)
+            }],
+        }
+        const responses = await producer.send(payload)
+
+        console.log('Published message', { responses })
+    }, 1000);
 }
 
 const receiveMessage = async (consumer) => {
@@ -58,8 +98,8 @@ const receiveMessage = async (consumer) => {
 
 const main = async () => {
     const { producer, consumer } = await connectToKafka()
-    await sendMessage(producer)
-    await receiveMessage(consumer)
+    await sendMessageEverySecond(producer)
+    // await receiveMessage(consumer)
     console.log('Done!');
 }
 
