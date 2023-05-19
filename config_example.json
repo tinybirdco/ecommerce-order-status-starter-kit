@@ -1,0 +1,10 @@
+{
+    "bootstrap_servers": "YOUR_BOOTSTRAP_SERVER",
+    "topic": "YOUR_TOPIC",
+    "clientID": "YOUR_CLIENT_IDp",
+    "security_protocol": "SASL_SSL",
+    "sasl_mechanisms": "PLAIN",
+    "sasl_username": "YOUR_USERNAME",
+    "sasl_password": "YOUR_PASWORD",
+    "session_timeout_ms": 10000
+}

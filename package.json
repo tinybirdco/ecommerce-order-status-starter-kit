@@ -1,0 +1,17 @@
+{
+    "name": "kelp-tinybird-demo",
+    "version": "1.0.0",
+    "description": "Example application showcasing how Kelp can be used to build a real-time dashboard on top of Tinybird.",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "preinstall": "./configure.sh"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "kafkajs": "^2.2.4"
+    }
+}
