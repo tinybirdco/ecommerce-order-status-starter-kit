@@ -2,15 +2,49 @@ DESCRIPTION >
 	Here are some queries that can be used to generate graphs or feed data into dashboards. These are designed to provide insights into various aspects of order management.
 
 
-NODE graphs_0
+NODE total_sales_per_day_over_last_month
 SQL >
 
     SELECT
       toDate(transactions.orderDate) AS Date,
       COUNT(*) AS TotalOrders
     FROM transactions
-    WHERE orderDate >= dateSub('month', 1, now())
+    WHERE orderDate >= date_sub(month, 1, now())
     GROUP BY Date
-    ORDER BY Date
+    ORDER BY Date ASC
+
+
+
+NODE new_customers_per_day_over_last_month
+DESCRIPTION >
+    New customers per day over the last month: This can be used for a line graph showing customer acquisition.
+
+SQL >
+
+    SELECT
+      toDate(transactions.orderDate) AS Date,
+      COUNT(DISTINCT userEmail) AS NewCustomers
+    FROM transactions
+    WHERE orderDate >= date_sub(month, 1, now())
+    GROUP BY Date
+    ORDER BY Date ASC
+
+
+
+NODE distribution_of_orders_across_different_product_families
+DESCRIPTION >
+    This can be used for a pie chart showing the variety of products ordered.
+
+SQL >
+
+    SELECT
+      products.O_FAMILY,
+      COUNT(*) AS TotalOrders
+    FROM transactions
+    INNER JOIN products ON products.O_ID = product_ID
+    GROUP BY
+        products.O_FAMILY
+    ORDER BY TotalOrders DESC
+        
 
 
