@@ -1,0 +1,14 @@
+DESCRIPTION >
+	Query to get all the customers who have placed an order for a particular product
+
+
+NODE all_customers_0
+SQL >
+
+    %
+    SELECT
+        transactions.userEmail
+    FROM transactions
+    WHERE product_ID = {{ String(product_ID, description="The products ID", required=False, default='96425') }}
+
+

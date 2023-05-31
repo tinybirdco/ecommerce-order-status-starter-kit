@@ -56,9 +56,15 @@ const sendMessageEverySecond = async (producer) => {
 
         const message = {
             product_ID: faker.number.int({ min: 0, max: 100000 }),
-            reigon: faker.number.int({ min: 1, max: 10 }),
+            region: faker.number.int({ min: 1, max: 10 }),
             orderID: faker.number.int({ min: 10000, max: 20000 }),
-            shippingLocation: faker.location.streetAddress({ useFullAddress: true }),
+            shippingLocation: {
+                streetAddress: faker.location.streetAddress({ useFullAddress: true }),
+                state: faker.location.state({ abbreviated: true }),
+                city: faker.location.city(),
+                zipCode: faker.location.zipCode(),
+                country: faker.location.country(),
+            },
             currentLocation: {
                 latitude: faker.location.latitude(),
                 longitude: faker.location.longitude()
@@ -66,6 +72,7 @@ const sendMessageEverySecond = async (producer) => {
             orderDate: faker.date.recent({ days: 10 }),
             fullName: faker.person.fullName(),
             userEmail: faker.internet.email(),
+            userEmail: "joe90@tinybird.co",
         }
 
         const payload = {

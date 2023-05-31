@@ -1,0 +1,16 @@
+DESCRIPTION >
+	Here are some queries that can be used to generate graphs or feed data into dashboards. These are designed to provide insights into various aspects of order management.
+
+
+NODE graphs_0
+SQL >
+
+    SELECT
+      toDate(transactions.orderDate) AS Date,
+      COUNT(*) AS TotalOrders
+    FROM transactions
+    WHERE orderDate >= dateSub('month', 1, now())
+    GROUP BY Date
+    ORDER BY Date
+
+

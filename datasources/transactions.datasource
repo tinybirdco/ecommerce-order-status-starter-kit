@@ -1,0 +1,24 @@
+
+SCHEMA >
+    `__value` String,
+    `currentLocation_latitude` Float32 `json:$.currentLocation.latitude`,
+    `currentLocation_longitude` Float32 `json:$.currentLocation.longitude`,
+    `fullName` String `json:$.fullName`,
+    `orderDate` DateTime64(3) `json:$.orderDate`,
+    `orderID` Int32 `json:$.orderID`,
+    `product_ID` Int32 `json:$.product_ID`,
+    `reigon` Int16 `json:$.reigon`,
+    `shippingLocation` String `json:$.shippingLocation`,
+    `userEmail` String `json:$.userEmail`
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYYYYMM(__timestamp)"
+ENGINE_SORTING_KEY "__timestamp"
+
+KAFKA_CONNECTION_NAME 'transactions'
+KAFKA_TOPIC 'kelp-ecommerce-demo'
+KAFKA_GROUP_ID 'kelp-ecommerce-demo_1684525468119'
+KAFKA_AUTO_OFFSET_RESET 'earliest'
+KAFKA_STORE_RAW_VALUE 'False'
+KAFKA_TARGET_PARTITIONS 'auto'
+KAFKA_KEY_AVRO_DESERIALIZATION ''

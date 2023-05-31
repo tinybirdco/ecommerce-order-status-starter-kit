@@ -1,0 +1,21 @@
+DESCRIPTION >
+	Query to get the most recent orders
+
+
+NODE most_recent_orders_0
+DESCRIPTION >
+    Query to get the most recent orders
+
+SQL >
+
+    %
+    SELECT
+        transactions.orderID,
+        transactions.orderDate,
+        transactions.product_ID,
+        transactions.shippingLocation
+    FROM transactions
+    ORDER BY orderDate DESC 
+    LIMIT {{ Int8(limit, description="Number of recent orders to retrieve", required=False, default='10') }}
+
+

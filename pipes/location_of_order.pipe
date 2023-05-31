@@ -1,0 +1,19 @@
+DESCRIPTION >
+	Query to check the status of a specific order by looking at its current location
+
+
+NODE location_of_order_0
+DESCRIPTION >
+    Query to check the status of a specific order by looking at its current location
+
+SQL >
+
+    %
+    SELECT
+        transactions.orderID,
+        transactions.currentLocation_longitude,
+        transactions.currentLocation_latitude
+    FROM transactions
+    WHERE orderID = {{ String(orderID, description="Gets the last known lat/long of any order", required=False, default='19801') }}
+
+

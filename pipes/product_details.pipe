@@ -1,0 +1,24 @@
+DESCRIPTION >
+	Query to get details of a particular product
+
+
+TOKEN "product_details_endpoint_read_1194" READ
+
+NODE product_details_0
+DESCRIPTION >
+    Query to get details of a particular product
+
+SQL >
+
+    %
+    SELECT
+        products.O_ID,
+        products.O_NAME,
+        products.O_FAMILY,
+        products.O_BRAND,
+        products.O_SIZE,
+        products.O_PRICE
+    FROM products
+    WHERE O_ID = {{ String(O_ID, description="Product ID", required=False, default='1234') }}
+
+

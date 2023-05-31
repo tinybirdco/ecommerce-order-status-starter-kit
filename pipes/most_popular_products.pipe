@@ -1,0 +1,21 @@
+DESCRIPTION >
+	Query to find out which products are most popular
+
+
+NODE most_popular_products_0
+SQL >
+
+    %
+    SELECT
+      transactions.product_ID,
+      products.O_NAME,
+      COUNT(*) AS OrderCount 
+    FROM transactions
+    INNER JOIN products ON products.O_ID = product_ID
+    GROUP BY
+      transactions.product_ID,
+      products.O_NAME
+    ORDER BY OrderCount DESC 
+    LIMIT {{ Int8(product_ID, description="Number of most populars orders to retrieve", required=False, default='10') }}
+
+
