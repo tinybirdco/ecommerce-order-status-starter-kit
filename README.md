@@ -12,15 +12,15 @@ Example application showcasing how Kelp can be used to build a real-time dashboa
 
 Click this button to deploy the data project to Tinybird 👇
 
-[![Deploy to Tinybird](https://cdn.tinybird.co/button)](https://ui.tinybird.co/workspaces/new?name=kelp_tinybird_demo)
+[![Deploy to Tinybird](https://cdn.tinybird.co/button)](https://ui.tinybird.co/workspaces/new?name=ecommerce-order-status-starter-kit)
 
 Follow the guided process, and your Tinybird workspace is now ready to start receiving events.
 
 1. Setup this repository locally
 
 ```bash
-git clone https://github.com/tinybirdco/kelp-tinybird-demo.git
-cd kelp-tinybird-demo
+git clone https://github.com/tinybirdco/ecommerce-order-status-starter-kit.git
+cd ecommerce-order-status-starter-kit
 ```
 
 2. Create an Upstash or Confluent Kafka Account
@@ -42,7 +42,6 @@ Go to [https://ui.tinybird.co/tokens](https://ui.tinybird.co/tokens) and copy th
 ⚠️Warning! The Admin token, the one you copied following this guide, is your admin token. Don't share it or publish it in your application. You can manage your tokens via API or using the Auth Tokens section in the UI. More detailed info at [Auth Tokens management](https://www.tinybird.co/docs/api-reference/token-api.html)
 
 1. Start sending data to Kafka.
-2.
 
 ```bash
 npm run start
