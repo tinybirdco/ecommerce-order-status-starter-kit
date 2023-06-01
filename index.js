@@ -2,6 +2,7 @@ const { Kafka, Partitioners, logLevel } = require('kafkajs')
 const { faker } = require('@faker-js/faker');
 const config = require('./config.json')
 
+// Connects to Kafka and returns a producer and consumer
 const connectToKafka = async () => {
     const kafka = new Kafka({
         clientId: config.clientID,
@@ -28,8 +29,12 @@ const connectToKafka = async () => {
     return { producer, consumer }
 }
 
-const sendMessageEverySecond = async (producer) => {
+// A function that sends a message at a random interval between .01 seconds to 1 second.
+const sendMessageAtRandomInterval = async (producer) => {
+    let randomInterval = Math.floor(Math.random() * 1000) + 10;
+
     setInterval(async () => {
+        randomInterval = Math.floor(Math.random() * 1000) + 10;
 
         const message = {
             product_ID: faker.number.int({ min: 0, max: 100000 }),
@@ -49,7 +54,7 @@ const sendMessageEverySecond = async (producer) => {
             orderDate: faker.date.recent({ days: 10 }),
             fullName: faker.person.fullName(),
             userEmail: faker.internet.email(),
-            userEmail: "joe90@tinybird.co",
+            // userEmail: "joe90@tinybird.co",
         }
 
         const payload = {
@@ -61,7 +66,7 @@ const sendMessageEverySecond = async (producer) => {
         const responses = await producer.send(payload)
 
         console.log('Published message', { responses })
-    }, 1000);
+    }, randomInterval);
 }
 
 const receiveMessage = async (consumer) => {
@@ -82,7 +87,7 @@ const receiveMessage = async (consumer) => {
 
 const main = async () => {
     const { producer, consumer } = await connectToKafka()
-    await sendMessageEverySecond(producer)
+    await sendMessageAtRandomInterval(producer)
     // await receiveMessage(consumer)
     console.log('Done!');
 }
