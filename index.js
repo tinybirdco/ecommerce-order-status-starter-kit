@@ -28,29 +28,6 @@ const connectToKafka = async () => {
     return { producer, consumer }
 }
 
-const sendMessage = async (producer) => {
-    const payload = {
-        topic: config.topic,
-        messages: [{
-            value: JSON.stringify({
-                product_ID: "Item_" + faker.number.int({ min: 0, max: 100000 }),
-                orderID: faker.number.int({ min: 10000, max: 20000 }),
-                shippingLocation: faker.location.streetAddress({ useFullAddress: true }),
-                currentLocation: {
-                    latitude: faker.location.latitude(),
-                    longitude: faker.location.longitude()
-                },
-                orderDate: faker.date.recent({ days: 10 }),
-                fullName: faker.person.fullName(),
-                userEmail: faker.internet.email(),
-            })
-        }],
-    }
-    const responses = await producer.send(payload)
-
-    console.log('Published message', { responses })
-    return responses
-}
 const sendMessageEverySecond = async (producer) => {
     setInterval(async () => {
 
