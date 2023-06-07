@@ -2,9 +2,9 @@
   <a href="https://www.tinybird.co/join-our-slack-community"><img alt="Slack Status" src="https://img.shields.io/badge/slack-chat-1FCC83?style=flat&logo=slack"></a>
 </p>
 
-# Kelp integration with Tinybird Starter Kit
+# eCommerce Order Status Starter Kit
 
-Example application showcasing how Kelp can be used to build a real-time dashboard on top of Tinybird, for an eCommerce demo application. This app allows you to track the status of orders in real-time, from placement to shipping and delivery, ultimately leading to better order management and improved customer satisfaction.
+Example application showcasing how to build out the backend of a demo eCommerce platform to show real-time analytics, which can be used to build a real-time dashboard. This example is built on top of Tinybird, Kafka, and Snowflake. This app allows you to track the status of orders in real-time, from placement to shipping and delivery, ultimately leading to better order management and improved customer satisfaction.
 
 ## Setup
 
@@ -25,9 +25,9 @@ cd ecommerce-order-status-starter-kit
 
 2. Create an Upstash or Confluent Kafka Account
 
-This demo uses [Upstash](https://upstash.com/) as a managed Kafka provider, but you can also use [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you use Confluent Cloud, you will need to update the `config.json` file with your credentials.
+This demo uses [Confluent Cloud](https://www.confluent.io/confluent-cloud/). If you use Confluent Cloud, you will need to update the `config.json` file with your credentials.
 
-3. Install dependencies
+1. Install dependencies
 
 This script will automatically install and configure the `tinybird-cli` for this project.
 
