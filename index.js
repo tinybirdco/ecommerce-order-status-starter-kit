@@ -2,6 +2,12 @@ const { Kafka, Partitioners, logLevel } = require('kafkajs')
 const { faker } = require('@faker-js/faker');
 const config = require('./config.json')
 
+
+// Introduce multi - items orders, when 1 order contain multiple items and not exactly with items quantity = 1. For that we need to allow non - unique OrderId and add Quantity field(default =1)
+// Allow to create orders with similar products(currently 1 product = 1 order)
+// Limit shipping to a single country, e.g.US: leave only state, city and street address.
+
+
 // Connects to Kafka and returns a producer and consumer
 const connectToKafka = async () => {
     const kafka = new Kafka({
@@ -29,15 +35,26 @@ const connectToKafka = async () => {
     return { producer, consumer }
 }
 
+const generateProductOrder = (quantity) => {
+    let products = [];
+
+    for (let i = 0; i < quantity; i++) {
+        products.push(faker.number.int({ min: 0, max: 1000000 }));
+    }
+    return products;
+}
+
 // A function that sends a message at a random interval between .01 seconds to 1 second.
 const sendMessageAtRandomInterval = async (producer) => {
     let randomInterval = Math.floor(Math.random() * 1000) + 10;
 
     setInterval(async () => {
         randomInterval = Math.floor(Math.random() * 1000) + 10;
-
+        const quantity = faker.number.int({ min: 0, max: 10 });
+        const productsOrdered = generateProductOrder(quantity);
         const message = {
-            product_ID: faker.number.int({ min: 0, max: 100000 }),
+            products: productsOrdered,
+            quantity: quantity,
             region: faker.number.int({ min: 1, max: 10 }),
             orderID: faker.number.int({ min: 10000, max: 20000 }),
             shippingLocation: {
@@ -45,7 +62,7 @@ const sendMessageAtRandomInterval = async (producer) => {
                 state: faker.location.state({ abbreviated: true }),
                 city: faker.location.city(),
                 zipCode: faker.location.zipCode(),
-                country: faker.location.country(),
+                country: "USA",
             },
             currentLocation: {
                 latitude: faker.location.latitude(),
@@ -54,7 +71,7 @@ const sendMessageAtRandomInterval = async (producer) => {
             orderDate: faker.date.recent({ days: 10 }),
             fullName: faker.person.fullName(),
             userEmail: faker.internet.email(),
-            // userEmail: "joe90@tinybird.co",
+            // userEmail: 'joe@tinybird.co'
         }
 
         const payload = {

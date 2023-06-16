@@ -13,6 +13,7 @@
     "license": "ISC",
     "dependencies": {
         "@faker-js/faker": "^8.0.1",
+        "csv-writer": "^1.6.0",
         "kafkajs": "^2.2.4"
     }
 }
