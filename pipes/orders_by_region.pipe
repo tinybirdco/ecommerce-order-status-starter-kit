@@ -2,6 +2,8 @@ DESCRIPTION >
 	Query to get orders which are in the same region
 
 
+TOKEN "orders_by_region_endpoint_read_3697" READ
+
 NODE all_orders_by_region
 DESCRIPTION >
     Query to get orders which are in the same region
@@ -11,21 +13,8 @@ SQL >
     %
     SELECT
         transactions.orderID,
-        transactions.reigon
+        transactions.region
     FROM transactions
-    WHERE reigon = {{ String(reigon, description="Gets the all of the orders for a given region", required=False, default=1) }}
-
-
-
-NODE orders_by_region_1
-SQL >
-
-    %
-    SELECT
-        transactions.reigon,
-        count(*) AS order_count
-    FROM transactions
-    GROUP BY reigon
-    ORDER BY order_count DESC
+    WHERE region = {{ String(region, description="Gets the all of the orders for a given region", required=False, default=1) }}
 
 

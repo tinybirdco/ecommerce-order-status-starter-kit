@@ -1,0 +1,30 @@
+TOKEN "mocktest_pipe_0767_endpoint_read_9055" READ
+
+TOKEN "ecommerce_kelp_app" READ
+
+TOKEN "transactions_for_latest_date_endpoint_read_2882" READ
+
+NODE transactions_pipe_4784_0
+SQL >
+
+    SELECT 
+        currentLocation_latitude,
+        currentLocation_longitude,
+        fullName,
+        orderDate,
+        orderID,
+        transactions.products
+        quantity,
+        region,
+        shippingLocation_city,
+        shippingLocation_country,
+        shippingLocation_state,
+        shippingLocation_streetAddress,
+        shippingLocation_zipCode,
+        userEmail
+    FROM 
+        transactions
+    WHERE 
+        orderDate = (SELECT MAX(orderDate) FROM transactions)
+
+

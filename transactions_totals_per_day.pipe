@@ -1,0 +1,31 @@
+DESCRIPTION >
+	This query calculates the total transaction amount for each date by summing up the price of each product multiplied by its quantity, grouped by date. The results are ordered by date in ascending order. The toDate function is used to convert the orderDate to a date (without the time part).
+
+
+TOKEN "ecommerce_kelp_app" READ
+
+TOKEN "transactions_totals_per_day_endpoint_read_8554" READ
+
+NODE transactions_totals_per_day_0
+SQL >
+
+    SELECT 
+        toDate(T.orderDate) AS transaction_date, 
+        SUM(T.quantity * P.price) AS total_amount
+    FROM 
+        (SELECT 
+            orderDate, 
+            quantity, 
+            product
+         FROM transactions
+         ARRAY JOIN products AS product) AS T
+    JOIN 
+        products AS P ON T.product = P.id
+    GROUP BY 
+        transaction_date
+    ORDER BY 
+        transaction_date
+    LIMIT
+      7
+
+

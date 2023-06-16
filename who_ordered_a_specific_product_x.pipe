@@ -1,0 +1,27 @@
+DESCRIPTION >
+	Query to get all the customers who have placed an order for a particular product
+
+
+NODE who_ordered_a_specific_product
+SQL >
+
+    %
+    SELECT DISTINCT userEmail
+    FROM
+        (
+            SELECT userEmail, product
+            FROM transactions ARRAY
+            JOIN products AS product
+            WHERE
+                product
+                = {{
+                    String(
+                        product_ID,
+                        description="The products ID",
+                        required=False,
+                        default='555014',
+                    )
+                }}
+        ) AS T
+
+

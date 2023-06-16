@@ -6,16 +6,21 @@ NODE most_popular_products_0
 SQL >
 
     %
-    SELECT
-      transactions.product_ID,
-      products.O_NAME,
-      COUNT(*) AS OrderCount 
-    FROM transactions
-    INNER JOIN products ON products.O_ID = product_ID
-    GROUP BY
-      transactions.product_ID,
-      products.O_NAME
-    ORDER BY OrderCount DESC 
+    SELECT 
+        T.product AS product_id,
+        P.name AS product_name,
+        COUNT(*) AS order_count
+    FROM 
+        (SELECT 
+            product
+         FROM transactions
+         ARRAY JOIN products AS product) AS T
+    JOIN 
+        products AS P ON T.product = P.id
+    GROUP BY 
+        product_id, product_name
+    ORDER BY 
+        order_count DESC
     LIMIT {{ Int8(product_ID, description="Number of most populars orders to retrieve", required=False, default='10') }}
 
 

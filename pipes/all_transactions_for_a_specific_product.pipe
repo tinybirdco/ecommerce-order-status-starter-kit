@@ -1,27 +1,21 @@
-DESCRIPTION >
-	Query to get the most recent orders
-
-
-TOKEN "ecommerce_kelp_app" READ
-
-NODE most_recent_orders_0
-DESCRIPTION >
-    Query to get the most recent orders
-
+NODE all_transactions_for_a_specific_product_0
 SQL >
 
     %
     SELECT
-        T.orderID,
-        T.orderDate,
+        T.currentLocation_latitude,
+        T.currentLocation_longitude,
         T.fullName,
-        T.userEmail,
+        T.orderDate,
+        T.orderID,
         T.quantity,
+        T.region,
         T.shippingLocation_city,
         T.shippingLocation_country,
         T.shippingLocation_state,
         T.shippingLocation_streetAddress,
         T.shippingLocation_zipCode,
+        T.userEmail,
         P.id AS product_id,
         P.name AS product_name,
         P.department,
@@ -32,31 +26,34 @@ SQL >
     FROM
         (
             SELECT
-                orderID,
-                orderDate,
+                currentLocation_latitude,
+                currentLocation_longitude,
                 fullName,
-                userEmail,
+                orderDate,
+                orderID,
+                transactions.products,
                 quantity,
+                region,
                 shippingLocation_city,
                 shippingLocation_country,
                 shippingLocation_state,
                 shippingLocation_streetAddress,
                 shippingLocation_zipCode,
+                userEmail,
                 product
             FROM transactions ARRAY
             JOIN products AS product
-            ORDER BY orderDate DESC
-            LIMIT
-                {{
-                    Int8(
-                        limit,
-                        description="Number of recent orders to retrieve",
+            WHERE
+                product
+                = {{
+                    String(
+                        O_ID,
+                        description="Product ID",
                         required=False,
-                        default='10',
+                        default=555014,
                     )
                 }}
         ) AS T
     JOIN products AS P ON T.product = P.id
-    ORDER BY T.orderDate DESC
 
 

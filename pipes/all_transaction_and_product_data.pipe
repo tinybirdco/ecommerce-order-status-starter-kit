@@ -1,27 +1,27 @@
-DESCRIPTION >
-	Query to get the most recent orders
-
-
-TOKEN "ecommerce_kelp_app" READ
-
-NODE most_recent_orders_0
-DESCRIPTION >
-    Query to get the most recent orders
-
+NODE all_transaction_and_product_data_0
 SQL >
 
     %
     SELECT
-        T.orderID,
-        T.orderDate,
+        T.__value,
+        T.__topic,
+        T.__partition,
+        T.__offset,
+        T.__timestamp,
+        T.__key,
+        T.currentLocation_latitude,
+        T.currentLocation_longitude,
         T.fullName,
-        T.userEmail,
+        T.orderDate,
+        T.orderID,
         T.quantity,
+        T.region,
         T.shippingLocation_city,
         T.shippingLocation_country,
         T.shippingLocation_state,
         T.shippingLocation_streetAddress,
         T.shippingLocation_zipCode,
+        T.userEmail,
         P.id AS product_id,
         P.name AS product_name,
         P.department,
@@ -32,16 +32,25 @@ SQL >
     FROM
         (
             SELECT
-                orderID,
-                orderDate,
+                __value,
+                __topic,
+                __partition,
+                __offset,
+                __timestamp,
+                __key,
+                currentLocation_latitude,
+                currentLocation_longitude,
                 fullName,
-                userEmail,
+                orderDate,
+                orderID,
                 quantity,
+                region,
                 shippingLocation_city,
                 shippingLocation_country,
                 shippingLocation_state,
                 shippingLocation_streetAddress,
                 shippingLocation_zipCode,
+                userEmail,
                 product
             FROM transactions ARRAY
             JOIN products AS product

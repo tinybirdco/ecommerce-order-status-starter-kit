@@ -1,0 +1,19 @@
+NODE distribution_of_orders_across_different_product_departments_0
+SQL >
+
+    SELECT 
+        P.department,
+        COUNT(*) AS order_count
+    FROM 
+        (SELECT 
+            product
+         FROM transactions
+         ARRAY JOIN products AS product) AS T
+    JOIN 
+        products AS P ON T.product = P.id
+    GROUP BY 
+        P.department
+    ORDER BY 
+        order_count DESC
+
+

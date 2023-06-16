@@ -6,9 +6,14 @@ SCHEMA >
     `fullName` String `json:$.fullName`,
     `orderDate` DateTime64(3) `json:$.orderDate`,
     `orderID` Int32 `json:$.orderID`,
-    `product_ID` Int32 `json:$.product_ID`,
-    `reigon` Int16 `json:$.reigon`,
-    `shippingLocation` String `json:$.shippingLocation`,
+    `products` Array(Int32) `json:$.products[:]`,
+    `quantity` Int16 `json:$.quantity`,
+    `region` Int16 `json:$.region`,
+    `shippingLocation_city` String `json:$.shippingLocation.city`,
+    `shippingLocation_country` String `json:$.shippingLocation.country`,
+    `shippingLocation_state` String `json:$.shippingLocation.state`,
+    `shippingLocation_streetAddress` String `json:$.shippingLocation.streetAddress`,
+    `shippingLocation_zipCode` String `json:$.shippingLocation.zipCode`,
     `userEmail` String `json:$.userEmail`
 
 ENGINE "MergeTree"
@@ -17,8 +22,9 @@ ENGINE_SORTING_KEY "__timestamp"
 
 KAFKA_CONNECTION_NAME 'transactions'
 KAFKA_TOPIC 'kelp-ecommerce-demo'
-KAFKA_GROUP_ID 'kelp-ecommerce-demo_1684525468119'
+KAFKA_GROUP_ID 'kelp-ecommerce-demo_1686939327974'
 KAFKA_AUTO_OFFSET_RESET 'earliest'
 KAFKA_STORE_RAW_VALUE 'False'
+KAFKA_STORE_HEADERS 'False'
 KAFKA_TARGET_PARTITIONS 'auto'
 KAFKA_KEY_AVRO_DESERIALIZATION ''

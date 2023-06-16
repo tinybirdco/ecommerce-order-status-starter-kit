@@ -1,0 +1,17 @@
+TOKEN "ecommerce_kelp_app" READ
+
+TOKEN "realtime_transactions_count_endpoint_read_2583" READ
+
+NODE realtime_transactions_count_0
+SQL >
+
+    SELECT 
+      count() AS cnt,
+      toStartOfMinute(__timestamp, 'America/New_York') AS ts
+    FROM transactions
+    WHERE date(__timestamp) = date(now('America/New_York')) and date_diff('minute', toDateTime(__timestamp), toDateTime(now())) < 60
+    GROUP BY ts
+    ORDER BY ts ASC WITH FILL STEP toIntervalMinute(1)
+    LIMIT 60
+
+

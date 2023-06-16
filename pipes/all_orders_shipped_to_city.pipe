@@ -2,16 +2,35 @@ DESCRIPTION >
 	Query to get all the orders shipped to a particular location
 
 
-NODE untitled_pipe_5933_0
+NODE all_orders_shipped_to_city_0
 SQL >
 
     %
     SELECT
-        transactions.orderID,
-        transactions.orderDate,
-        transactions.product_ID,
-        transactions.shippingLocation
+        currentLocation_latitude,
+        currentLocation_longitude,
+        fullName,
+        orderDate,
+        orderID,
+        products,
+        quantity,
+        region,
+        shippingLocation_city,
+        shippingLocation_country,
+        shippingLocation_state,
+        shippingLocation_streetAddress,
+        shippingLocation_zipCode,
+        userEmail
     FROM transactions
-    WHERE city = {{ String(city, description="Location orders are being shipped too", required=False, default='96425') }}
+    WHERE
+        shippingLocation_city
+        = {{
+            String(
+                city,
+                description="Location orders are being shipped too",
+                required=False,
+                default='Uptonboro',
+            )
+        }}
 
 

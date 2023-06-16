@@ -1,0 +1,11 @@
+TOKEN "transactions_latest_date_endpoint_read_7433" READ
+
+NODE transactions_latest
+SQL >
+
+    SELECT
+      toDate(max(orderDate)) as LatestDate,
+      toDayOfWeek(max(orderDate)) as DayOfWeek
+    FROM transactions
+
+

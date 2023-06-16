@@ -1,0 +1,28 @@
+DESCRIPTION >
+	Query to get details of a particular product
+
+
+TOKEN "product_details_endpoint_read_1194" READ
+
+TOKEN "ecommerce_kelp_app" READ
+
+NODE product_details_0
+DESCRIPTION >
+    Query to get details of a particular product
+
+SQL >
+
+    %
+    SELECT 
+        id,
+        name,
+        department,
+        material,
+        brand,
+        size,
+        price
+    FROM 
+        products
+    WHERE id = {{ String(O_ID, description="Product ID", required=False, default='1234') }}
+
+

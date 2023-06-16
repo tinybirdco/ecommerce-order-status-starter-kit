@@ -1,0 +1,31 @@
+DESCRIPTION >
+	Query to get the order's total amount
+
+
+TOKEN "total_order_amount_endpoint_read_7372" READ
+
+NODE total_order_amount_0
+SQL >
+
+    %
+    SELECT T.orderID, SUM(T.quantity * P.price) AS total_amount
+    FROM
+        (
+            SELECT orderID, quantity, product
+            FROM transactions ARRAY
+            JOIN products AS product
+            WHERE
+                transactions.orderID
+                = {{
+                    String(
+                        orderID,
+                        description="Gets total price by the order ID",
+                        required=False,
+                        default='14064',
+                    )
+                }}
+        ) AS T
+    JOIN products AS P ON T.product = P.id
+    GROUP BY T.orderID
+
+

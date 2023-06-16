@@ -1,0 +1,20 @@
+
+SCHEMA >
+    `O_ID` Nullable(Int64),
+    `O_NAME` Nullable(String),
+    `O_FAMILY` Nullable(String),
+    `O_BRAND` Nullable(String),
+    `O_SIZE` Nullable(String),
+    `O_PRICE` Nullable(Float64),
+    `insertion_date` DateTime DEFAULT now()
+
+ENGINE "MergeTree"
+ENGINE_PARTITION_KEY "toYear(insertion_date)"
+ENGINE_SORTING_KEY "insertion_date"
+
+IMPORT_SERVICE 'snowflake'
+IMPORT_CONNECTION_NAME 'snowflake'
+IMPORT_EXTERNAL_DATASOURCE 'TINYBIRD.SAMPLES.PRODUCTS_CSV_3'
+IMPORT_STRATEGY 'replace'
+IMPORT_QUERY 'SELECT O_ID, O_NAME, O_FAMILY, O_BRAND, O_SIZE, O_PRICE FROM TINYBIRD.SAMPLES.PRODUCTS_CSV_3'
+IMPORT_SCHEDULE '@on-demand'

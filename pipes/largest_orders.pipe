@@ -1,0 +1,30 @@
+DESCRIPTION >
+	This query will calculate the total price for each order by summing up the price of each product multiplied by its quantity, and then order the results by total price in descending order, thus returning the largest orders first.
+
+
+TOKEN "ecommerce_kelp_app" READ
+
+TOKEN "largest_orders_endpoint_read_0685" READ
+
+NODE untitled_pipe_3594_0
+SQL >
+
+    SELECT 
+        T.orderID, 
+        SUM(T.quantity * P.price) AS total_price
+    FROM 
+        (SELECT 
+            orderID, 
+            quantity, 
+            product
+         FROM transactions
+         ARRAY JOIN products AS product) AS T
+    JOIN 
+        products AS P ON T.product = P.id
+    GROUP BY 
+        T.orderID
+    ORDER BY 
+        total_price DESC
+    LIMIT 10
+
+

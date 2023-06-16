@@ -1,0 +1,19 @@
+TOKEN "ecommerce_kelp_app" READ
+
+TOKEN "transactions_by_day_endpoint_read_6803" READ
+
+NODE transactions_by_day_0
+SQL >
+
+    select 
+      toDate(transactions.orderDate) as Date,
+      transactions.shippingLocation_country as ShippingCountry,
+      products.O_BRAND as Brand,
+      products.O_FAMILY as Type,
+      count(*) as Orders,
+      sum(products.O_PRICE) as Revenue
+    from transactions tx
+    join products_old p on p.O_ID = tx.product_ID
+    group by Date, ShippingCountry,Brand, Type
+
+

@@ -1,0 +1,12 @@
+NODE number_of_orders_by_reigon_0
+SQL >
+
+    %
+    SELECT
+        transactions.region,
+        count(*) AS order_count
+    FROM transactions
+    GROUP BY region
+    ORDER BY order_count DESC
+
+

@@ -35,7 +35,7 @@ This script will automatically install and configure the `tinybird-cli` for this
 npm install
 ```
 
-Choose your region: 1 for `us-east`, 2 for `eu`. A new `.tinyb` file will be created.
+Choose your region: 1 for `us-east`, 2 for `eu`. A new `.tinyb` file will be created.tb
 
 Go to [https://ui.tinybird.co/tokens](https://ui.tinybird.co/tokens) and copy the token with admin rights.
 

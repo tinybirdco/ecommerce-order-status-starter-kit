@@ -1,0 +1,12 @@
+NODE new_customers_per_day_over_last_month_z_0
+SQL >
+
+    SELECT
+      toDate(transactions.orderDate) AS Date,
+      COUNT(DISTINCT userEmail) AS NewCustomers
+    FROM transactions
+    WHERE orderDate >= date_sub(month, 1, now())
+    GROUP BY Date
+    ORDER BY Date ASC
+
+

@@ -1,0 +1,19 @@
+TOKEN "ecommerce_kelp_app" READ
+
+TOKEN "product_sales_by_day_endpoint_read_6247" READ
+
+NODE product_sales_by_day_0
+SQL >
+
+    select 
+      toDate(transactions.orderDate) as Date,
+      toDayOfWeek(transactions.orderDate) as WeekDate,
+      products.O_NAME as Product,
+      products.O_ID as ProductId,
+      count(*) as  OrdersCount,
+      sum(products.O_PRICE) as productRevenue
+    from transactions tx
+    join products_old p on p.O_ID = tx.product_ID
+    group by Date, WeekDate, Product, ProductId
+
+
